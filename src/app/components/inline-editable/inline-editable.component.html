@@ -1,0 +1,17 @@
+<div
+  (dblclick)="onEnableEdit()"
+  *ngIf="!editing"
+  class="editable"
+>
+  {{initialValue}}
+</div>
+<div *ngIf="editing">
+  <input
+    [(ngModel)]="editValue"
+    #editInput
+    (keyup.enter)="onEnter(editInput.value)"
+    (keyup.esc)="onEsc()"
+    (focus)="isFocused = true"
+    (blur)="isFocused = false; delayClear()"
+  />
+</div>

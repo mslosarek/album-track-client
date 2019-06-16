@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+$icon-font-path: '~open-iconic/font/fonts/';
+@import '~open-iconic/font/css/open-iconic-bootstrap.scss';
+
+@import '~bootstrap/scss/bootstrap.scss';
+
+a {
+  cursor: pointer;;
+}
+
+.overlay {
+  position: fixed !important;
+}

@@ -1,0 +1,68 @@
+<div *ngIf="album" class="row editable m-0" [ngClass]="{'editing': editing}" [id]="'album_' + album.id">
+  <div class="col col-10">
+    <table class="table table-condensed" [formGroup]="albumForm">
+      <tbody>
+        <tr class="row">
+          <th scope="row" class="col col-4">
+            <label [for]="'inputTitle_' + album.id" class="w-100">Title</label>
+          </th>
+          <td class="col col-8" *ngIf="!editing">{{album.title}}</td>
+          <td class="col col-8 p-1" *ngIf="editing">
+            <input
+              type="text"
+              class="form-control w-100"
+              [id]="'inputTitle_' + album.id"
+              placeholder="Album Title"
+              formControlName="title"
+            />
+          </td>
+        </tr>
+        <tr class="row">
+          <th scope="row" class="col col-4">
+            <label [for]="'inputYear_' + album.id" class="w-100">Year</label>
+          </th>
+          <td class="col col-8" *ngIf="!editing">{{album.year}}</td>
+          <td class="col col-8 p-1" *ngIf="editing">
+            <input
+              type="text"
+              class="form-control w-100"
+              [id]="'inputYear_' + album.id"
+              placeholder="Year"
+              formControlName="year"
+            />
+          </td>
+        </tr>
+        <tr class="row">
+          <th scope="row" class="col col-4">
+            <label [for]="'inputCondition_' + album.id" class="w-100">Condition</label>
+          </th>
+          <td class="col col-8" *ngIf="!editing">{{album.condition}}</td>
+          <td class="col col-8 p-1" *ngIf="editing">
+            <select
+              class="form-control w-100"
+              [id]="'inputCondition_' + album.id"
+              formControlName="condition"
+            >
+              <option value="">Choose Condition</option>
+              <option *ngFor="let condition of conditions" [value]="condition">{{condition}}</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col col-2 text-right pr-0" *ngIf="!editing">
+    <button class="btn btn-primary" (click)="toggleEdit(true)">Edit</button>
+  </div>
+  <div class="col col-2 text-right pr-0" *ngIf="editing">
+    <div class="mb-1">
+      <button class="btn btn-primary" [disabled]="!albumForm.valid" (click)="saveAlbum()">Save</button>
+    </div>
+    <div class="mb-1">
+      <app-delete-album [album]="album" (delete)="deleteAlbum($event)" ></app-delete-album>
+    </div>
+    <div class="mb-1">
+      <button class="btn btn-secondary" (click)="editing = false;">Cancel</button>
+    </div>
+  </div>
+</div>

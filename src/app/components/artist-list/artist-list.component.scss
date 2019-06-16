@@ -1,0 +1,17 @@
+thead a {
+  cursor: pointer;
+}
+
+.clearable-input {
+  position: relative;
+  .oi {
+    position: absolute;
+    right: 5px;
+    top: 9px;
+    cursor: pointer;
+  }
+}
+
+.highlight {
+  background-color: rgba(0, 0, 0, 0.075);
+}
