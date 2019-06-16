@@ -1,0 +1,29 @@
+<button class="btn btn-danger" (click)="promptDelete()">Delete</button>
+
+<div
+  class="modal fade"
+  bsModal
+  #staticModal="bs-modal"
+  [config]="{backdrop: 'static'}"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-static-name"
+>
+  <div class="modal-dialog modal-lg text-left">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-static-name" class="modal-title pull-left">Delete Album?</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete the album "{{album.title}}"?
+        <div class="mt-4 text-right">
+          <button class="btn btn-danger m-1" (click)="delete.emit(album); staticModal.hide()">Yes</button>
+          <button class="btn btn-primary m-1" (click)="staticModal.hide()">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

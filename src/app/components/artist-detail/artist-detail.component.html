@@ -1,0 +1,43 @@
+<div *ngIf="artist" #artistDetail>
+  <div class="d-flex align-items-center align-items-middle">
+    <h1 class="my-2">Artist:</h1>
+    <h1 class="my-2 mr-2 flex-grow-1">
+      <app-inline-editable
+        [initialValue]="artist.name"
+        (save)="saveArtistName($event)"
+        [saveOnBlur]="false"
+      ></app-inline-editable>
+    </h1>
+    <app-delete-artist class="my-2" [artist]="artist" (delete)="artistDelete($event)"></app-delete-artist>
+  </div>
+  <table class="table">
+    <tbody>
+      <tr class="row">
+        <th scope="row" class="col col-4">Number Of Albums:</th>
+        <td class="col col-8">{{(artist.albums || []).length}}</td>
+      </tr>
+      <tr class="row">
+        <th scope="row" class="col col-4">Years Active:</th>
+        <td class="col col-8">
+          <ng-container *ngIf="artist.years && artist.years.length === 1">{{artist.years[0]}}</ng-container>
+          <ng-container *ngIf="artist.years && artist.years.length > 1">{{artist.years[0]}} - {{artist.years[artist.years.length - 1]}}</ng-container>
+        </td>
+      </tr>
+      <tr class="row">
+        <th scope="row" class="col col-4">Highest Frequency Word(s):</th>
+        <td class="col col-8">
+          <span *ngFor="let wordCount of getMostUsedWordFromAlbumTitles(); last as isLast">
+            {{wordCount[0]}}: {{wordCount[1]}}<span *ngIf="!isLast">, </span>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="d-flex flex-row justify-content-between align-items-center">
+    <h2>Albums:</h2>
+    <app-add-album (saveAlbum)="albumAdd($event)" [artist]="artist"></app-add-album>
+  </div>
+  <div *ngFor="let album of artist.albums; index as i" [ngClass]="{'bg-light': i % 2}">
+    <app-album-detail [album]="album" (albumDelete)="albumDelete($event)" (albumSave)="albumSave($event)"></app-album-detail>
+  </div>
+</div>

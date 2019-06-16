@@ -1,0 +1,53 @@
+<div>
+  <div class="d-flex flex-row align-items-center">
+    <h1 class="flex-grow-1">
+      Artists
+    </h1>
+    <div class="mr-1">
+      <app-add-artist (saveArtist)="addArtist($event)" [name]="artistFilter"></app-add-artist>
+    </div>
+    <div>
+      <button class="btn btn-primary" (click)="exportToCSV()">Export CSV</button>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr class="row">
+        <th scope="col" class="col col-6">
+          <a (click)="toggleSort('name')">
+            Artist
+            <span class="oi oi-caret-top" *ngIf="sortKey === 'name' && sortDir === 1"></span>
+            <span class="oi oi-caret-bottom" *ngIf="sortKey === 'name' && sortDir === -1"></span>
+          </a>
+          <div class="clearable-input float-right">
+            <input placeholder="Filter" [(ngModel)]="artistFilter"><span class="oi oi-circle-x" (click)="artistFilter = ''"></span>
+          </div>
+        </th>
+        <th scope="col" class="col col-3">
+          <a (click)="toggleSort('album_count')">
+            Number of Albums
+            <span class="oi oi-caret-top" *ngIf="sortKey === 'album_count' && sortDir === 1"></span>
+            <span class="oi oi-caret-bottom" *ngIf="sortKey === 'album_count' && sortDir === -1"></span>
+          </a>
+        </th>
+        <th scope="col" class="col col-3">
+          <a (click)="toggleSort('years_active')">
+            Years Active
+            <span class="oi oi-caret-top" *ngIf="sortKey === 'years_active' && sortDir === 1"></span>
+            <span class="oi oi-caret-bottom" *ngIf="sortKey === 'years_active' && sortDir === -1"></span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let artist of sortArtists()" class="row" (click)="selectArtist.emit(artist)" [ngClass]="{'highlight': selectedArtist && selectedArtist.id === artist.id}">
+        <td class="col col-6">{{artist.name}}</td>
+        <td class="col col-3">{{(artist.albums || []).length}}</td>
+        <td class="col col-3">
+          <ng-container *ngIf="artist.years && artist.years.length === 1">{{artist.years[0]}}</ng-container>
+          <ng-container *ngIf="artist.years && artist.years.length > 1">{{artist.years[0]}} - {{artist.years[artist.years.length - 1]}}</ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
